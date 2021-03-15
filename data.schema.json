@@ -16,19 +16,29 @@
             "type": "object",
             "properties": {
                 "region": {
-                    "$ref": "#/definitions/Region"
+                    "type": "object",
+                    "description": "A rectangular geographic region centered around a specific latitude and longitude.",
+                    "properties": {
+                        "center": { "$ref": "#/definitions/Coordinate" },
+                        "lat-meters": {
+                            "description": "The north-to-south span of the region (measured in meters) specified as the distance from the center point to the bounds along the north-to-south axis.",
+                            "type": "number"
+                        },
+                        "lng-meters": {
+                            "description": "The east-to-west span of the region (measured in meters) specified as the distance from the center point to the bounds along the east-to-west axis.",
+                            "type": "number"
+                        }
+                    },
+                    "required": ["center", "lat-meters", "lng-meters"],
+                    "additionalProperties": false
                 },
                 "places": {
                     "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
+                            "name": { "type": "string" },
+                            "description": { "type": "string" },
                             "id": {
                                 "type": "string",
                                 "format": "uuid"
@@ -56,11 +66,11 @@
                                 "required": ["street", "city", "state", "zip", "country"]
                             },
                             "type": {
-                                "enum": []
+                                "enum": ["dining", "housing", "hall", "athletics", "parking", "landmark", "other"]
                             },
                             "query": {
                                 "type": "array",
-                                "description": "A list of strings that when searched will bring up this place.",
+                                "description": "A list of strings that when searched will bring up this place. Properties `name` and `type` (unless \"other\") are automatically included.",
                                 "items": {
                                     "type": "string"
                                 },
@@ -70,84 +80,26 @@
                             "url": {
                                 "type": "string"
                             },
-                            "sub-places": {
+                            "subplaces": {
                                 "type": "array",
                                 "allOf": [
-                                    {
-                                        "$ref": "#/definitions/Sub-Place"
-                                    },
-                                    {
-                                        "Restaurant": {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": { "const": "restaurant" },
-                                                "name": { "type": "string" },
-                                                "description": { "type": "string" },
-                                                "schedule": { "$ref": "#/definitions/Schedule" }
-                                            },
-                                            "additionalProperties": false,
-                                            "required": ["type", "name"]
-                                        }
-                                    },
-                                    {
-                                        "Office": {
-                                            "type": "object",
-                                            "allOf": [
-                                                { "$ref": "#/definitions/Sub-Place" },
-                                                { "$ref": "#/definitions/Restaurant" }
-                                            ],
-                                            "properties": {
-                                                "type": { "const": "office" },
-                                                "phone": { "type": "string" },
-                                                "email": { "type": "string" },
-                                                "url": { "type": "string" }
-                                            },
-                                            "additionalProperties": false,
-                                            "required": ["type", "name"]
-                                        }
-                                    },
-                                    {
-                                        "Restroom": {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": { "const": "restroom" },
-                                                "room-number": { "$ref": "#/definitions/Sub-Place/properties/room-number" },
-                                                "sex": { "enum": ["male", "female", "unisex", "family" ] }
-                                            },
-                                            "additionalProperties": false,
-                                            "required": ["type", "room-number", "sex"]
-                                        }
-                                    }
+                                    { "$ref": "#/definitions/Subplace" },
+                                    { "$ref": "#/definitions/Restaurant" },
+                                    { "$ref": "#/definitions/Office" },
+                                    { "$ref": "#/definitions/Restroom" }
                                 ],
                                 "minItems": 1,
                                 "uniqueItems": true
                             }
                         },
                         "additionalProperties": false,
-                        "required": ["title", "id" ,"coordinate", ""]
+                        "required": ["name", "id" ,"coordinate"]
                     },
                     "minItems": 1,
                     "uniqueItems": true
                 }
             },
             "required": ["region"],
-            "additionalProperties": false
-        },
-        "Region": {
-            "type": "object",
-            "description": "A rectangular geographic region centered around a specific latitude and longitude.",
-            "properties": {
-                "center": { "$ref": "#/definitions/Coordinate" },
-                "lat-meters": {
-                    "description": "The north-to-south span of the region (measured in meters) specified as the distance from the center point to the bounds along the north-to-south axis.",
-                    "type": "number"
-                },
-                "lng-meters": {
-                    "description": "The east-to-west span of the region (measured in meters) specified as the distance from the center point to the bounds along the east-to-west axis.",
-                    "type": "number"
-                }
-            },
-            "required": ["center", "lat-meters", "lng-meters"],
             "additionalProperties": false
         },
         "Coordinate": {
@@ -173,13 +125,14 @@
                     "type": "object",
                     "properties": {
                         "days": {
-                            "description": "All of the days of the week that `time-ranges` applies to.",
+                            "description": "All of the days of the week that `time-ranges` applies to. Default value",
                             "type": "array",
                             "items": {
                                 "day": {
                                     "enum": ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
                                 }
                             },
+                            "default": ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
                             "minItems": 1,
                             "uniqueItems": true
                         },
@@ -188,32 +141,65 @@
                             "items": {
                                 "time-range": {
                                     "type": "string",
-                                    "format": "\\d{1,2}:\\d{2}-\\d{1,2}:\\d{2}"
+                                    "format": "\\d{2}:\\d{2}-\\d{2}:\\d{2}"
                                 }
                             },
+                            "default": ["00:00-24:00"],
                             "minItems": 1,
                             "uniqueItems": true
                         }
                     },
                     "additionalProperties": false,
-                    "required": [ "days" ]
+                    "minProperties": 1
                 }
             },
             "uniqueItems": true,
             "minItems": 1
         },
-        "Sub-Place": {
+        "Subplace": {
             "type": "object",
             "properties": {
-                "name": {
-                    "type": "string"
-                },
+                "type":  { "type": "string" },
+                "name":  { "type": "string" },
                 "room-number": {
                     "type": "string",
                     "pattern": "[a-zA-Z0-9]+"
                 }
             },
-            "required": ["name"]
+            "required": ["type"]
+        },
+        "Restaurant": {
+            "type": "object",
+            "allOf": [ { "$ref": "#/definitions/Subplace" } ],
+            "properties": {
+                "type": { "const": "restaurant" },
+                "description": { "type": "string" },
+                "schedule": { "$ref": "#/definitions/Schedule" }
+            },
+            "additionalProperties": false,
+            "required": ["type", "name"]
+        },
+        "Office": {
+            "type": "object",
+            "allOf": [ { "$ref": "#/definitions/Restaurant" } ],
+            "properties": {
+                "type": { "const": "office" },
+                "phone": { "type": "string" },
+                "email": { "type": "string" },
+                "url": { "type": "string" }
+            },
+            "additionalProperties": false,
+            "required": ["type", "name"]
+        },
+        "Restroom": {
+            "type": "object",
+            "allOf": [ { "$ref": "#/definitions/Subplace" } ],
+            "properties": {
+                "type": { "const": "restroom" },
+                "sex": { "enum": ["male", "female", "unisex", "family" ] }
+            },
+            "additionalProperties": false,
+            "required": ["type", "sex"]
         }
     }
 }
