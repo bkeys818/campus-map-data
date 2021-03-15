@@ -2,7 +2,7 @@ import { readFileSync, readdir } from "fs";
 import { validateMultiple } from "tv4";
 import { setFailed } from "@actions/core"
 
-const schema = JSON.parse(readFileSync("data.schema.json", { encoding: "utf-8" }))
+const schema = JSON.parse(readFileSync("./data.schema.json", { encoding: "utf-8" }))
 
 readdir("./data", (error, files) => {
     if (error) {
