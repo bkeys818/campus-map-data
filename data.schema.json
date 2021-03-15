@@ -43,12 +43,7 @@
                                 "type": "string",
                                 "format": "uuid"
                             },
-                            "coordinate": {
-                                "type": "object",
-                                "properties": { "$ref": "#/definitions/Coordinate" },
-                                "additionalProperties": false,
-                                "required": ["lat", "lng"]
-                            },
+                            "coordinate": { "$ref": "#/definitions/Coordinate" },
                             "address": {
                                 "type": "object",
                                 "properties": {
