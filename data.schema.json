@@ -38,7 +38,8 @@
                         "type": "object",
                         "properties": {
                             "name": { "type": "string" },
-                            "description": { "type": "string" },
+                            "desc": { "type": "string" },
+                            "type": { "enum": ["dining", "housing", "hall", "athletics", "parking", "landmark", "other"] },
                             "id": {
                                 "type": "string",
                                 "format": "uuid"
@@ -60,10 +61,7 @@
                                 "additionalProperties": false,
                                 "required": ["street", "city", "state", "zip", "country"]
                             },
-                            "type": {
-                                "enum": ["dining", "housing", "hall", "athletics", "parking", "landmark", "other"]
-                            },
-                            "query": {
+                            "querys": {
                                 "type": "array",
                                 "description": "A list of strings that when searched will bring up this place. Properties `name` and `type` (unless \"other\") are automatically included.",
                                 "items": {
