@@ -10,7 +10,7 @@ readdir("./data", (error, files) => {
         return;
     }
     Promise.all(files.map(function(file){
-        let json = JSON.parse(readFileSync(file, { encoding: "utf-8" }))
+        let json = JSON.parse(readFileSync("./data/"+file, { encoding: "utf-8" }))
         let response = validateMultiple(json, schema, true);
         if (!response.valid) {
             if (response.missing)

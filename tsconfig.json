@@ -6,5 +6,5 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
     },
-    "files": ["validate.ts"]
+    "files": [".github/scripts/validate.ts"]
 }

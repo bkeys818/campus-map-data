@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = require("fs");
 const tv4_1 = require("tv4");
 const core_1 = require("@actions/core");
-const schema = JSON.parse(fs_1.readFileSync("data.schema.json", { encoding: "utf-8" }));
+const schema = JSON.parse(fs_1.readFileSync("./data.schema.json", { encoding: "utf-8" }));
 fs_1.readdir("./data", (error, files) => {
     if (error) {
         console.error(error);
         return;
     }
     Promise.all(files.map(function (file) {
-        let json = JSON.parse(fs_1.readFileSync(file, { encoding: "utf-8" }));
+        let json = JSON.parse(fs_1.readFileSync("./data/" + file, { encoding: "utf-8" }));
         let response = tv4_1.validateMultiple(json, schema, true);
         if (!response.valid) {
             if (response.missing)
