@@ -1,0 +1,31 @@
+{
+  "name": "u-map-data",
+  "version": "0.1.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bkeys818/u-map-data.git"
+  },
+  "keywords": [
+    "u-map",
+    "university",
+    "map",
+    "college"
+  ],
+  "author": "Ben Keys (https://github.com/bkeys818)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bkeys818/u-map-data/issues"
+  },
+  "homepage": "https://github.com/bkeys818/u-map-data#readme",
+  "dependencies": {
+    "tv4": "^1.3.0"
+  },
+  "devDependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "@types/node": "^14.14.35",
+    "@types/tv4": "^1.2.29",
+    "typescript": "^4.2.3"
+  }
+}
