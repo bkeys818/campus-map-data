@@ -43,7 +43,7 @@ fs_1.readdir("./data", (error, files) => {
             if (err.code === 'ENOENT')
                 console.error("Error! Couldn't read file: " + file);
             if (err instanceof SyntaxError)
-                console.error("Incorect (basic) JSON format!" + "\nFile: " + file + "\nError:" + err.message);
+                console.error("Incorect (basic) JSON format!" + "\nFile: " + file + "\nError: " + err.message);
             else
                 console.error(err);
         }
