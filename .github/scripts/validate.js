@@ -15,7 +15,7 @@ fs_1.readdir("./data", (error, files) => {
             let json = JSON.parse(data);
             let response = tv4_1.validateMultiple(json, schema, true);
             if (!response.valid) {
-                if (response.missing)
+                if (response.missing.length != 0)
                     console.error("Missing schemas: " + response.missing.join(", "));
                 if (response.errors) {
                     for (const error of response.errors) {
