@@ -35,9 +35,9 @@ readdir("./data", (error, files) => {
             } else return true
         } catch(err) {
             if (err.code === 'ENOENT')
-                console.error("Error! Couldn't find file: "+file)
+                console.error("Error! Couldn't read file: "+file)
             if (err instanceof SyntaxError)
-                console.error("Incorect (basic) JSON format!\n"+err.message)
+                console.error("Incorect (basic) JSON format!"+"\nFile: "+file+"\nError:"+err.message)
             else 
                 console.error(err)
         }
