@@ -4,7 +4,7 @@
     "properties": {
         "locations": {
             "type": "array",
-            "items": { "$ref": "definitions.json#/definitions/Location" },
+            "items": { "$ref": "#/definitions/Location" },
             "minItems": 1,
             "uniqueItems": true
         }
