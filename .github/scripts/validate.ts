@@ -21,8 +21,8 @@ readdir("./data", (error, files) => {
                     for (const error of response.errors) {
                         function errorStr(error: tv4.ValidationError): string {
                             var result = `Validation Error [${error.code}]: ${error.message}`
-                            if (error.schemaPath) result += `\nSchema path: ${error.schemaPath}`
-                            if (error.dataPath) result += `\nData path: ${error.dataPath}`
+                            if (error.schemaPath) result += `\n\tSchema path: ${error.schemaPath}`
+                            if (error.dataPath) result += `\n\tData path: ${error.dataPath}`
                             if (error.subErrors) error.subErrors.forEach(error => {
                                 result += '\n'+errorStr(error)
                             });

@@ -22,9 +22,9 @@ fs_1.readdir("./data", (error, files) => {
                         function errorStr(error) {
                             var result = `Validation Error [${error.code}]: ${error.message}`;
                             if (error.schemaPath)
-                                result += `\nSchema path: ${error.schemaPath}`;
+                                result += `\n\tSchema path: ${error.schemaPath}`;
                             if (error.dataPath)
-                                result += `\nData path: ${error.dataPath}`;
+                                result += `\n\tData path: ${error.dataPath}`;
                             if (error.subErrors)
                                 error.subErrors.forEach(error => {
                                     result += '\n' + errorStr(error);
@@ -41,9 +41,9 @@ fs_1.readdir("./data", (error, files) => {
         }
         catch (err) {
             if (err.code === 'ENOENT')
-                console.error("Error! Couldn't find file: " + file);
+                console.error("Error! Couldn't read file: " + file);
             if (err instanceof SyntaxError)
-                console.error("Incorect (basic) JSON format!\n" + err.message);
+                console.error("Incorect (basic) JSON format!" + "\nFile: " + file + "\nError:" + err.message);
             else
                 console.error(err);
         }
