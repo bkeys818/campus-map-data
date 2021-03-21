@@ -16,6 +16,10 @@
         "Campus": {
             "type": "object",
             "properties": {
+                "name": { 
+                    "description": "This value is required if the `campuses` array it's in has more then 1 campus in it.",
+                    "type": "string"
+                },
                 "region": {
                     "type": "object",
                     "description": "A rectangular geographic region centered around a specific latitude and longitude.",
