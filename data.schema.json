@@ -3,17 +3,17 @@
     "type": "object",
     "properties": {
         "version": { "const": "v0.1-alpha" },
-        "locations": {
+        "campuses": {
             "type": "array",
-            "items": { "$ref": "#/definitions/Location" },
+            "items": { "$ref": "#/definitions/Campus" },
             "minItems": 1,
             "uniqueItems": true
         }
     },
     "additionalProperties": false,
-    "required": ["version", "locations"],
+    "required": ["version", "campuses"],
     "definitions": {
-        "Location": {
+        "Campus": {
             "type": "object",
             "properties": {
                 "region": {

@@ -1,6 +1,6 @@
 {
     "version": "v0.1-alpha",
-    "locations": [
+    "campuses": [
         {
             "region": {
                 "center": {
