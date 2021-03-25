@@ -44,7 +44,7 @@
                         "properties": {
                             "name": { "type": "string" },
                             "desc": { "type": "string" },
-                            "type": { "enum": ["dining", "housing", "hall", "athletics", "parking", "landmark", "other"] },
+                            "type": { "enum": ["dining", "housing", "athletics", "parking", "landmark", "other"] },
                             "id": {
                                 "type": "string",
                                 "format": "uuid"
